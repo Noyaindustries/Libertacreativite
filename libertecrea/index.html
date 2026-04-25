@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Libertà Créativité · Studio Créatif Ixelles</title>
+  <meta name="description" content="Des espaces d'exception pour vos événements professionnels ou privés. Studio photo, vidéo, podcast au cœur d'Ixelles, Bruxelles.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --bg: #FBF8F4;
+      --bg-alt: #F5EFE6;
+      --surface: #FFFDF9;
+      --text: #3A2C24;
+      --text-secondary: #7D6E63;
+      --text-muted: #A89888;
+      --accent: #C49B6C;
+      --accent-hover: #B08850;
+      --accent-light: #E0CFBA;
+      --border: #E5DBD0;
+      --shadow: rgba(58,44,36,0.05);
+      --shadow-hover: rgba(58,44,36,0.10);
+      --glass-bg: rgba(255,253,249,0.6);
+      --glass-border: rgba(229,219,208,0.5);
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+
+    body {
+      background-color: var(--bg);
+      font-family: var(--font-body);
+      color: var(--text);
+      line-height: 1.7;
+      font-weight: 400;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      max-width: 100vw;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    body.has-custom-cursor,
+    body.has-custom-cursor a, body.has-custom-cursor button,
+    body.has-custom-cursor .card-3d, body.has-custom-cursor .faq-header,
+    body.has-custom-cursor .btn, body.has-custom-cursor input,
+    body.has-custom-cursor select, body.has-custom-cursor textarea { cursor: none; }
+
+    h1,h2,h3 { font-family:var(--font-heading); font-weight:500; letter-spacing:-0.01em; }
+    h1 { font-size:clamp(2.8rem,6.5vw,5.5rem); line-height:1.1; }
+    h2 { font-size:clamp(2.2rem,4.5vw,3.8rem); line-height:1.15; }
+    h3 { font-size:clamp(1.3rem,2.5vw,1.8rem); line-height:1.25; }
+
+    .container { max-width:1280px; margin:0 auto; padding:0 clamp(1.2rem,4vw,2.5rem); }
+
+    /* ── Curseur ── */
+    .cursor-dot {
+      position:fixed; width:6px; height:6px; border-radius:50%;
+      background:var(--accent); pointer-events:none; z-index:10001;
+      transform:translate(-50%,-50%); transition:width 0.3s,height 0.3s,background 0.3s;
+    }
+    .cursor-ring {
+      position:fixed; width:36px; height:36px; border-radius:50%;
+      border:1.5px solid rgba(196,155,108,0.5); pointer-events:none; z-index:10000;
+      transform:translate(-50%,-50%); transition:width 0.35s,height 0.35s,border-color 0.3s,background 0.3s;
+    }
+    .cursor-dot.interactive { width:10px; height:10px; background:var(--text); }
+    .cursor-ring.interactive { width:56px; height:56px; border-color:var(--accent); background:rgba(196,155,108,0.06); }
+    .cursor-dot.on-card { width:50px; height:50px; background:rgba(58,44,36,0.05); mix-blend-mode:multiply; }
+    .cursor-ring.on-card { width:60px; height:60px; border-color:transparent; }
+
+    /* ── Accent ── */
+    .accent-line {
+      display:flex; align-items:center; gap:1rem; color:var(--accent);
+      font-size:0.7rem; letter-spacing:3px; font-weight:500; text-transform:uppercase;
+      margin-bottom:1.5rem; font-family:var(--font-body);
+    }
+    .accent-line::before { content:''; width:28px; height:1.5px; background:var(--accent); flex-shrink:0; }
+    .accent-line-center { justify-content:center; margin-bottom:2rem; }
+    .accent-line-center::after { content:''; width:28px; height:1.5px; background:var(--accent); flex-shrink:0; }
+
+    /* ── Divider ── */
+    .section-divider {
+      display:flex; justify-content:center; align-items:center;
+      padding:clamp(3rem,6vw,5rem) 0; overflow:hidden;
+    }
+    .divider-wave { width:clamp(200px,40vw,400px); height:40px; }
+    .divider-wave .wave-path {
+      fill:none; stroke:var(--accent-light); stroke-width:1;
+      stroke-dasharray:8 6; animation:wave-flow 8s linear infinite;
+    }
+    .divider-wave .wave-path-2 {
+      fill:none; stroke:var(--accent-light); stroke-width:0.6;
+      stroke-dasharray:6 9; animation:wave-flow 12s linear infinite reverse;
+    }
+    .divider-wave .center-dot {
+      fill:var(--accent); animation:dot-pulse 3s ease-in-out infinite;
+    }
+    @keyframes wave-flow { 0%{stroke-dashoffset:0} 100%{stroke-dashoffset:-200} }
+    @keyframes dot-pulse { 0%,100%{opacity:0.3;r:2.5} 50%{opacity:0.9;r:4} }
+
+    /* ── Boutons ── */
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:0.85rem 2rem; border-radius:50px; font-family:var(--font-body);
+      font-weight:500; font-size:0.72rem; letter-spacing:2px; text-transform:uppercase;
+      text-decoration:none; transition:all 0.35s cubic-bezier(0.16,1,0.3,1);
+      cursor:pointer; border:1px solid transparent; min-height:44px; white-space:nowrap;
+    }
+    .btn-primary { background:var(--accent); color:#FFFDF9; border-color:var(--accent); }
+    .btn-primary:hover { background:var(--accent-hover); border-color:var(--accent-hover); transform:translateY(-2px); box-shadow:0 12px 28px rgba(196,155,108,0.2); }
+    .btn-outline { background:transparent; color:var(--accent); border-color:var(--accent); }
+    .btn-outline:hover { background:var(--accent); color:#FFFDF9; transform:translateY(-2px); }
+
+    /* ── Reveal ── */
+    .reveal { opacity:0; transform:translateY(50px); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .stagger-children>* { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .stagger-children.visible>*:nth-child(1){transition-delay:0.05s;opacity:1;transform:translateY(0)}
+    .stagger-children.visible>*:nth-child(2){transition-delay:0.12s;opacity:1;transform:translateY(0)}
+    .stagger-children.visible>*:nth-child(3){transition-delay:0.19s;opacity:1;transform:translateY(0)}
+    .stagger-children.visible>*:nth-child(4){transition-delay:0.26s;opacity:1;transform:translateY(0)}
+    .stagger-children.visible>*:nth-child(5){transition-delay:0.33s;opacity:1;transform:translateY(0)}
+    .stagger-children.visible>*:nth-child(6){transition-delay:0.40s;opacity:1;transform:translateY(0)}
+    .stagger-children.visible>*:nth-child(7){transition-delay:0.47s;opacity:1;transform:translateY(0)}
+    .stagger-children.visible>*:nth-child(8){transition-delay:0.54s;opacity:1;transform:translateY(0)}
+
+    /* ── Navigation ── */
+    header {
+      position:fixed; top:0; left:0; width:100%; z-index:200;
+      padding:1.5rem 0; transition:all 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    header.scrolled {
+      padding:0.7rem 0; background:rgba(251,248,244,0.88);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner { display:flex; justify-content:space-between; align-items:center; }
+    .logo { font-family:var(--font-heading); font-size:1.5rem; font-weight:500; letter-spacing:3px; color:var(--text); text-decoration:none; }
+    .logo span { font-family:var(--font-body); font-size:0.52rem; letter-spacing:5px; display:block; color:var(--text-muted); margin-top:-2px; }
+    .nav-links { display:flex; gap:0.2rem; list-style:none; align-items:center; }
+    .nav-links a {
+      color:var(--text-muted); text-decoration:none; font-weight:500;
+      font-size:0.6rem; letter-spacing:2.5px; text-transform:uppercase;
+      padding:0.5rem 0.9rem; transition:color 0.3s; border-radius:30px;
+    }
+    .nav-links a:hover,.nav-links a.active { color:var(--accent); }
+    .nav-links a.active { background:rgba(196,155,108,0.06); }
+    .nav-btn { background:var(--accent); color:#FFFDF9!important; padding:0.5rem 1.4rem!important; border-radius:50px!important; font-weight:600!important; }
+    .nav-btn:hover { background:var(--accent-hover)!important; }
+
+    .hamburger { display:none; flex-direction:column; justify-content:center; width:44px; height:44px; background:none; border:none; cursor:pointer; gap:5px; }
+    .hamburger-line { display:block; width:24px; height:1.5px; background:var(--text); transition:transform 0.4s,opacity 0.3s; }
+    .hamburger.open .hamburger-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open .hamburger-line:nth-child(2){opacity:0}
+    .hamburger.open .hamburger-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+    .mobile-menu {
+      display:none; position:fixed; inset:0; background:rgba(251,248,244,0.97);
+      backdrop-filter:blur(30px); z-index:150; flex-direction:column;
+      justify-content:center; align-items:center; gap:1.5rem;
+      opacity:0; visibility:hidden; transition:opacity 0.4s,visibility 0.4s;
+    }
+    .mobile-menu.open { opacity:1; visibility:visible; }
+    .mobile-menu a { font-family:var(--font-heading); font-size:2rem; font-style:italic; color:var(--text-secondary); text-decoration:none; transition:color 0.3s; }
+    .mobile-menu a:hover { color:var(--accent); }
+    .menu-close { position:absolute; top:2rem; right:2rem; background:none; border:1px solid var(--border); color:var(--accent); width:44px; height:44px; border-radius:50%; font-size:1.2rem; cursor:pointer; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height:100vh; min-height:100dvh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; text-align:center;
+      padding:6rem 1.5rem 3rem; background:linear-gradient(180deg,#FBF8F4 0%,#F5EFE6 50%,#FBF8F4 100%);
+    }
+    .hero-subtitle { font-size:0.68rem; letter-spacing:6px; text-transform:uppercase; color:var(--text-muted); margin:1.5rem 0 2rem; font-weight:500; }
+    .hero-intro { max-width:560px; margin:0 auto 2.5rem; color:var(--text-secondary); font-size:1rem; line-height:1.7; }
+    .hero-buttons { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+    .hero-features { display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem; margin-top:clamp(4rem,8vw,7rem); width:100%; max-width:1100px; }
+    .hero-feat { text-align:center; }
+    .hero-feat-icon { font-size:1.6rem; margin-bottom:1rem; color:var(--accent); }
+    .hero-feat-title { font-size:0.62rem; letter-spacing:2.5px; text-transform:uppercase; color:var(--text); font-weight:500; margin-bottom:0.4rem; }
+    .hero-feat-desc { font-size:0.8rem; color:var(--text-muted); }
+    .counter-value { display:inline-block; font-family:var(--font-heading); font-size:2.5rem; color:var(--accent); font-weight:600; }
+
+    section { padding:clamp(5rem,10vw,8rem) 0; }
+
+    /* ── Histoire ── */
+    .histoire-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(3rem,6vw,5rem); align-items:center; }
+    .histoire-visual {
+      background:var(--glass-bg); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+      border:1px solid var(--glass-border); aspect-ratio:4/3; border-radius:8px;
+      display:flex; align-items:center; justify-content:center; color:var(--border); font-size:3rem; position:relative;
+    }
+    .histoire-badge { position:absolute; top:-15px; left:-15px; background:var(--accent); color:#FFFDF9; padding:1rem 1.3rem; font-family:var(--font-heading); font-size:0.9rem; line-height:1.2; border-radius:4px; }
+    .histoire-quote { font-family:var(--font-heading); font-style:italic; font-size:clamp(1.5rem,3vw,2rem); color:var(--text); margin-bottom:2rem; line-height:1.4; }
+    .histoire-quote span { color:var(--accent); }
+    .histoire-text { color:var(--text-secondary); font-size:0.95rem; line-height:1.9; margin-bottom:1.2rem; }
+    .signature { font-family:var(--font-heading); font-size:1.6rem; color:var(--accent); font-style:italic; margin-top:2rem; }
+    .signature-title { font-size:0.6rem; letter-spacing:2px; color:var(--text-muted); text-transform:uppercase; margin-top:0.3rem; }
+    .eco-badge { display:inline-flex; align-items:center; gap:0.5rem; padding:0.6rem 1.1rem; border:1px solid var(--accent-light); color:var(--accent); font-size:0.65rem; letter-spacing:1.5px; font-weight:500; margin-top:2rem; border-radius:30px; }
+
+    /* ── Cards ── */
+    .services-categories { display:flex; flex-direction:column; gap:clamp(3.5rem,6vw,5rem); }
+    .service-category-header { margin-bottom:0.5rem; }
+    .service-category-header h3 { font-size:clamp(1.5rem,3vw,2rem); color:var(--text); }
+    .service-category-header h3 em { color:var(--accent); font-style:italic; }
+    .service-category-desc { color:var(--text-secondary); font-size:0.9rem; margin-bottom:2rem; }
+    .cards-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1.3rem; }
+    .card-3d {
+      background:var(--surface); border:1px solid var(--border); border-radius:10px;
+      padding:1.8rem 1.6rem; display:flex; flex-direction:column;
+      transition:border-color 0.35s,box-shadow 0.45s,transform 0.1s;
+      transform-style:preserve-3d; transform:perspective(800px) rotateX(0deg) rotateY(0deg);
+      will-change:transform; position:relative;
+    }
+    .card-3d:hover { border-color:var(--accent-light); box-shadow:0 20px 40px var(--shadow-hover); }
+    .card-3d.featured { border-color:var(--accent); background:#FEFCFA; }
+    .card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.8rem; }
+    .card-top h4 { font-family:var(--font-heading); font-size:1.05rem; color:var(--text); font-weight:500; line-height:1.25; flex:1; }
+    .card-price { font-family:var(--font-heading); font-size:1.5rem; color:var(--accent); white-space:nowrap; font-weight:600; line-height:1; }
+    .card-price small { font-size:0.65rem; color:var(--text-muted); font-family:var(--font-body); font-weight:400; }
+    .card-desc { color:var(--text-secondary); font-size:0.85rem; line-height:1.6; margin-bottom:0.8rem; flex:1; }
+    .card-features { list-style:none; margin:0.5rem 0 1rem; }
+    .card-features li { font-size:0.8rem; color:var(--text-secondary); padding:0.35rem 0; display:flex; gap:0.5rem; align-items:baseline; }
+    .card-features li::before { content:'—'; color:var(--accent); flex-shrink:0; }
+    .card-option { font-size:0.78rem; color:var(--text-muted); margin-top:0.3rem; }
+    .card-option strong { color:var(--accent); }
+    .card-tag { font-size:0.58rem; letter-spacing:2px; color:var(--accent); text-transform:uppercase; font-weight:500; margin-top:auto; padding-top:0.8rem; }
+    .card-3d.featured .card-tag { background:var(--accent); color:#FFFDF9; padding:0.25rem 0.7rem; border-radius:50px; display:inline-block; align-self:flex-start; }
+    .card-badge { position:absolute; top:1rem; right:1rem; background:var(--accent); color:#FFFDF9; font-size:0.55rem; letter-spacing:2px; padding:0.25rem 0.7rem; border-radius:50px; font-weight:500; }
+    .tarif-note { text-align:center; color:var(--text-muted); font-size:0.85rem; margin-top:2.5rem; font-style:italic; }
+
+    /* ── Réservation ── */
+    .reservation-wrapper {
+      display:grid; grid-template-columns:1fr 1fr; gap:3rem;
+      background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:2.5rem;
+    }
+    .reservation-info h3 { font-family:var(--font-heading); font-style:italic; margin-bottom:0.5rem; }
+    .info-item { display:flex; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--border); }
+    .info-icon { width:40px; height:40px; background:rgba(196,155,108,0.08); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .info-label { font-size:0.58rem; letter-spacing:2px; color:var(--accent); text-transform:uppercase; font-weight:500; margin-bottom:0.2rem; }
+    .info-value { color:var(--text-secondary); font-size:0.88rem; }
+    .reservation-form { display:flex; flex-direction:column; gap:1.3rem; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-input {
+      background:var(--bg); border:1px solid var(--border); padding:0.85rem 1.1rem;
+      border-radius:8px; font-family:var(--font-body); color:var(--text); font-size:0.88rem;
+      width:100%; transition:border-color 0.3s; min-height:44px;
+    }
+    .form-input:focus { outline:none; border-color:var(--accent); }
+    .form-textarea { resize:vertical; min-height:100px; }
+
+    /* ── FAQ ── */
+    .faq-container { max-width:750px; margin:0 auto; }
+    .faq-item { border-bottom:1px solid var(--border); }
+    .faq-header { display:flex; justify-content:space-between; align-items:center; padding:1.5rem 0; cursor:pointer; font-weight:400; color:var(--text); font-size:1rem; transition:color 0.3s; min-height:56px; }
+    .faq-header:hover { color:var(--accent); }
+    .faq-toggle { width:28px; height:28px; border:1px solid var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--accent); transition:transform 0.4s; flex-shrink:0; }
+    .faq-item.open .faq-toggle { transform:rotate(45deg); }
+    .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.5s ease; }
+    .faq-answer-inner { padding-bottom:1.5rem; color:var(--text-secondary); font-size:0.9rem; line-height:1.8; }
+
+    /* ── Contact ── */
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+    .contact-map { background:var(--surface); border:1px solid var(--border); border-radius:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:350px; }
+    .contact-list { display:flex; flex-direction:column; gap:1.5rem; margin-top:2rem; }
+    .access-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+    .access-card { background:var(--surface); border:1px solid var(--border); padding:1.5rem; border-radius:10px; }
+
+    /* ── Galerie ── */
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; grid-auto-rows: 260px; grid-auto-flow: dense; }
+    .photo-wrapper { overflow: hidden; border-radius: 8px; border:1px solid var(--border); }
+    .grid-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; }
+    .photo-wrapper:hover .grid-img { transform: scale(1.05); }
+    .grid-img.wide { grid-column: span 2; }
+    .grid-img.tall { grid-row: span 2; }
+
+    /* ── Footer ── */
+    footer { background:#2C1F1A; color:#F5F0E8; padding:5rem 0 2rem; margin-top:2rem; }
+    .footer-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:3rem; margin-bottom:4rem; }
+    .footer-logo { font-family:var(--font-heading); font-size:1.4rem; color:#F5F0E8; margin-bottom:1rem; }
+    .footer-logo span { color:var(--accent); }
+    .footer-desc { color:#B5A89A; font-size:0.85rem; line-height:1.7; margin-bottom:1.5rem; }
+    .footer-socials { display:flex; gap:0.6rem; }
+    .social-dot { width:34px; height:34px; border:1px solid rgba(181,168,154,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#B5A89A; font-size:0.7rem; cursor:pointer; transition:all 0.3s; }
+    .social-dot:hover { border-color:var(--accent); color:var(--accent); }
+    .footer-col h4 { color:var(--accent); font-size:0.62rem; letter-spacing:2px; margin-bottom:1.5rem; text-transform:uppercase; font-weight:500; }
+    .footer-links { list-style:none; }
+    .footer-links li { margin-bottom:0.7rem; }
+    .footer-links a { color:#B5A89A; text-decoration:none; font-size:0.85rem; transition:color 0.3s; }
+    .footer-links a:hover { color:var(--accent); }
+    .footer-bottom { border-top:1px solid rgba(181,168,154,0.15); padding-top:2rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:0.72rem; color:#8A7D72; }
+
+    /* ── INTRO OVERLAY ── */
+    #introOverlay {
+      position:fixed; inset:0; z-index:9000; background:var(--bg);
+      display:flex; align-items:center; justify-content:center;
+      transition:opacity 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    #introOverlay.fade-out { opacity:0; pointer-events:none; }
+    #introCanvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+    /* CSS Post-processing layers */
+    .intro-vignette {
+      position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:radial-gradient(ellipse at center, transparent 35%, rgba(58,44,36,0.5) 100%);
+      transition:opacity 0.5s;
+    }
+    .intro-grain {
+      position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0.04;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:128px 128px; animation:grain-shift 0.3s steps(3) infinite;
+    }
+    @keyframes grain-shift { 0%{transform:translate(0,0)} 33%{transform:translate(-2px,1px)} 66%{transform:translate(1px,-2px)} 100%{transform:translate(-1px,2px)} }
+    .intro-dof {
+      position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0;
+      background:radial-gradient(circle at center, transparent 20%, rgba(251,248,244,0.3) 50%, rgba(251,248,244,0.7) 80%);
+      transition:opacity 0.6s;
+    }
+    .intro-dof.active { opacity:1; }
+    .intro-flash {
+      position:absolute; inset:0; background:radial-gradient(circle at center, #FFFDF9, #FBF8F4);
+      opacity:0; z-index:5; pointer-events:none;
+    }
+    .intro-skip {
+      position:absolute; bottom:max(2rem, env(safe-area-inset-bottom, 0px) + 1rem);
+      right:2rem; z-index:10;
+      background:rgba(58,44,36,0.4); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+      border:1px solid rgba(196,155,108,0.3); color:var(--accent);
+      font-family:var(--font-body); font-size:0.65rem; letter-spacing:2px;
+      text-transform:uppercase; padding:0.65rem 1.6rem; border-radius:30px;
+      cursor:pointer; transition:all 0.3s; min-height:44px;
+    }
+    .intro-skip:hover { border-color:var(--accent); background:rgba(58,44,36,0.6); }
+    .intro-brand {
+      position:absolute; bottom:max(2rem, env(safe-area-inset-bottom, 0px) + 1rem);
+      left:50%; transform:translateX(-50%); z-index:10;
+      font-family:var(--font-heading); font-size:0.8rem; color:var(--accent-light);
+      letter-spacing:4px; text-transform:uppercase; opacity:0;
+      animation:brand-fade 1s 0.5s ease forwards;
+    }
+    @keyframes brand-fade { to{opacity:1} }
+    .intro-progress {
+      position:absolute; bottom:0; left:0; height:2px;
+      background:linear-gradient(90deg, transparent, var(--accent), transparent);
+      z-index:10; width:0%; transition:width 0.1s linear;
+    }
+    .site-content { opacity:0; transition:opacity 0.8s ease 0.2s; }
+    .site-content.visible { opacity:1; }
+
+    @media(max-width:1024px){
+      .histoire-grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}
+      .reservation-wrapper{grid-template-columns:1fr;padding:2rem}.footer-grid{grid-template-columns:1fr 1fr}
+      .cards-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+    }
+    @media(max-width:768px){
+      .nav-links{display:none}.hamburger{display:flex}.mobile-menu{display:flex}
+      .hero-features{grid-template-columns:repeat(2,1fr);gap:2rem}
+      .photo-grid{grid-auto-rows:200px}
+      .grid-img.wide,.grid-img.tall{grid-column:auto;grid-row:auto}
+      .reservation-wrapper{padding:1.5rem}.form-row{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;text-align:center}
+      .access-grid{grid-template-columns:1fr}.cards-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+    }
+    @media(max-width:480px){
+      .hero-features{grid-template-columns:1fr}.cards-grid{grid-template-columns:1fr}.card-3d{padding:1.4rem 1.2rem}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+      .reveal,.stagger-children>*{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body class="has-custom-cursor">
+
+  <!-- ═══ IMMERSIVE 3D INTRO ═══ -->
+  <div id="introOverlay">
+    <canvas id="introCanvas"></canvas>
+    <div class="intro-vignette"></div>
+    <div class="intro-grain"></div>
+    <div class="intro-dof" id="introDof"></div>
+    <div class="intro-flash" id="introFlash"></div>
+    <div class="intro-progress" id="introProgress"></div>
+    <div class="intro-brand">Libertà Créativité</div>
+    <button class="intro-skip" id="introSkip">Passer l'intro →</button>
+  </div>
+
+  <div class="site-content" id="siteContent">
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <header id="mainHeader">
+    <div class="container nav-inner">
+      <a href="#accueil" class="logo">Libertà<span>Créativité</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#accueil" data-section="accueil" class="active">Accueil</a></li>
+        <li><a href="#studio" data-section="studio">Le Studio</a></li>
+        <li><a href="#services" data-section="services">Services & Tarifs</a></li>
+        <li><a href="#contact" data-section="contact">Contact</a></li>
+        <li><a href="#reservation" class="nav-btn">Réserver</a></li>
+      </ul>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-menu" id="mobileMenu">
+    <button class="menu-close" id="menuCloseBtn">✕</button>
+    <a href="#accueil">Accueil</a><a href="#studio">Le Studio</a><a href="#services">Services & Tarifs</a>
+    <a href="#reservation">Réserver</a><a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <section class="hero" id="accueil">
+      <div class="reveal">
+        <h1>Des espaces d'exception pour vos événements</h1>
+        <p class="hero-subtitle">Professionnels ou Privés</p>
+        <p class="hero-intro">Un lieu d'exception pour des moments professionnels ou privés, dans un cadre élégant au cœur de Bruxelles.</p>
+        <div class="hero-buttons">
+          <a href="#reservation" class="btn btn-primary">Réserver votre date</a>
+          <a href="#studio" class="btn btn-outline">Découvrir le lieu</a>
+        </div>
+      </div>
+      <div class="hero-features stagger-children">
+        <div class="hero-feat"><div class="hero-feat-icon">📍</div><div class="hero-feat-title">Emplacement Premium</div><div class="hero-feat-desc">Avenue Louise, Bruxelles</div></div>
+        <div class="hero-feat"><div class="hero-feat-icon">✨</div><div class="hero-feat-title">Lieu Modulable</div><div class="hero-feat-desc">Adapté à vos besoins</div></div>
+        <div class="hero-feat"><div class="hero-feat-icon">🪄</div><div class="hero-feat-title">Prestations Sur Mesure</div><div class="hero-feat-desc">Décoration, traiteur, technique...</div></div>
+        <div class="hero-feat"><div class="hero-feat-icon">🤝</div><div class="hero-feat-title">Accompagnement</div><div class="hero-feat-desc">De la planification à la réalisation</div></div>
+      </div>
+      <div style="display:flex;gap:3rem;justify-content:center;margin-top:2rem;flex-wrap:wrap">
+        <div style="text-align:center"><span class="counter-value" data-count="115">0</span> m²<br><small style="color:var(--text-muted)">modulables</small></div>
+        <div style="text-align:center"><span class="counter-value" data-count="70">0</span><br><small style="color:var(--text-muted)">personnes max.</small></div>
+      </div>
+    </section>
+
+    <div class="section-divider"><svg class="divider-wave" viewBox="0 0 400 40" preserveAspectRatio="none"><path class="wave-path" d="M0 20 Q50 5 100 20 T200 20 T300 20 T400 20"/><path class="wave-path-2" d="M0 22 Q50 35 100 22 T200 22 T300 22 T400 22"/><circle class="center-dot" cx="200" cy="20" r="2.5"/></svg></div>
+
+    <section id="studio" class="container">
+      <div class="accent-line">Notre Histoire</div>
+      <div class="histoire-grid">
+        <div class="histoire-visual reveal" style="background: url('video20260424095123/PHOTO-2026-04-24-09-51-16.jpg') center/cover no-repeat; text-indent:-9999px"><div class="histoire-badge" style="text-indent:0">13<br><small>Rue du Mail</small></div>📸</div>
+        <div class="reveal">
+          <p class="histoire-quote">"La passion nourrit la créativité, et la créativité <span>apporte la liberté.</span>"</p>
+          <p class="histoire-text">Libertà Créativité Studio est un espace polyvalent et inspirant niché au cœur d'Ixelles, à quelques minutes de l'Avenue Louise. Alliant modernité, élégance et modularité, ce lieu unique est conçu pour accueillir tous types de projets créatifs et professionnels.</p>
+          <p class="histoire-text">Sous la direction artistique de <strong>Joely Lutonadio</strong>, le studio met à votre disposition des décors soignés et du mobilier design pour transformer vos idées en résultats concrets.</p>
+          <div class="signature">Joely Lutonadio</div><div class="signature-title">Direction artistique & Fondatrice</div>
+          <div class="eco-badge">🌿 Lieu éco-responsable</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"><svg class="divider-wave" viewBox="0 0 400 40" preserveAspectRatio="none"><path class="wave-path" d="M0 20 Q50 5 100 20 T200 20 T300 20 T400 20"/><path class="wave-path-2" d="M0 22 Q50 35 100 22 T200 22 T300 22 T400 22"/><circle class="center-dot" cx="200" cy="20" r="2.5"/></svg></div>
+
+    <section class="container">
+      <div class="reveal"><div class="accent-line">L'Aperçu</div><h2>Visite en Images</h2></div>
+      <div class="photo-grid reveal stagger-children" style="margin-top:3rem">
+        <div class="photo-wrapper grid-img wide tall"><img src="video20260424095123/PHOTO-2026-04-24-09-51-17.jpg" class="grid-img wide tall" alt="Espace principal du studio"></div>
+        <div class="photo-wrapper"><img src="video20260424095123/PHOTO-2026-04-24-09-51-24.jpg" class="grid-img" alt="Chaises en rotin"></div>
+        <div class="photo-wrapper grid-img tall"><img src="video20260424095123/PHOTO-2026-04-24-09-51-28.jpg" class="grid-img tall" alt="Miroir vintage"></div>
+        <div class="photo-wrapper"><img src="video20260424095123/PHOTO-2026-04-24-09-51-12.jpg" class="grid-img" alt="Softboxes photo"></div>
+        <div class="photo-wrapper"><img src="video20260424095123/PHOTO-2026-04-24-09-51-13.jpg" class="grid-img" alt="Portant de vêtements"></div>
+        <div class="photo-wrapper grid-img wide"><img src="video20260424095123/PHOTO-2026-04-24-09-51-34.jpg" class="grid-img wide" alt="Espace de réunion"></div>
+      </div>
+    </section>
+
+    <div class="section-divider"><svg class="divider-wave" viewBox="0 0 400 40" preserveAspectRatio="none"><path class="wave-path" d="M0 20 Q50 5 100 20 T200 20 T300 20 T400 20"/><path class="wave-path-2" d="M0 22 Q50 35 100 22 T200 22 T300 22 T400 22"/><circle class="center-dot" cx="200" cy="20" r="2.5"/></svg></div>
+
+    <section id="services" class="container">
+      <div class="reveal"><div class="accent-line">Nos offres</div><h2>Services & Tarifs</h2></div>
+      <div class="services-categories" style="margin-top:3rem">
+        <div class="reveal">
+          <div class="service-category-header"><h3>Location : <em>L'Espace Créatif</em></h3></div>
+          <p class="service-category-desc">Un cadre élégant et modulable pour vos projets et événements.</p>
+          <div class="cards-grid stagger-children">
+            <div class="card-3d"><div class="card-top"><h4>Studio Shooting & Vidéo</h4><div class="card-price">70€</div></div><p class="card-desc">Accès au plateau et setup mis à disposition.</p><div class="card-tag">Création</div></div>
+            <div class="card-3d"><div class="card-top"><h4>Location Podcast</h4><div class="card-price">80€ <small>et +</small></div></div><p class="card-desc">Lieu + Micros + Setup technique inclus.</p><div class="card-tag">Audio</div></div>
+            <div class="card-3d"><div class="card-top"><h4>Vestiaire</h4><div class="card-price">50€</div></div><p class="card-desc">Espace dédié pour vos tenues et préparations.</p><div class="card-tag">Option</div></div>
+            <div class="card-3d featured"><div class="card-badge">Populaire</div><div class="card-top"><h4>Événementiel Privé</h4><div class="card-price">150€ <small>/h</small></div></div><p class="card-desc">Anniversaire, baby shower, dîner privé.</p><ul class="card-features"><li>Capacité jusqu'à 50 personnes</li><li>Espace élégant & modulable</li><li>Table buffet & matériel audio/visuel</li><li>Accompagnement personnalisé</li></ul><div class="card-tag">Privé</div></div>
+            <div class="card-3d featured"><div class="card-top"><h4>Événementiel Corporate</h4><div class="card-price">150€ <small>/h</small></div></div><p class="card-desc">Conférence, séminaire, lancement de produit.</p><ul class="card-features"><li>Capacité jusqu'à 70 personnes</li><li>Prix variable selon vos demandes</li></ul><div class="card-tag">Professionnel</div></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="service-category-header"><h3>Production : <em>L'Expertise Technique</em></h3></div>
+          <p class="service-category-desc">L'expertise technique pour sublimer votre image.</p>
+          <div class="cards-grid stagger-children">
+            <div class="card-3d"><div class="card-top"><h4>Photo — 30 min</h4><div class="card-price">125€</div></div><ul class="card-features"><li>2 tenues</li><li>6 photos retouchées</li><li>Galerie complète (brute)</li><li>Livraison digitale sous 5 jours</li></ul><div class="card-tag">Photographie</div></div>
+            <div class="card-3d featured"><div class="card-badge">Populaire</div><div class="card-top"><h4>Photo — 1 heure</h4><div class="card-price">185€</div></div><ul class="card-features"><li>2 tenues</li><li>15 photos retouchées</li><li>Galerie complète (brute)</li><li>Livraison digitale sous 5 jours</li></ul><p class="card-option">🚀 Option Express (24h–48h) : <strong>+30€</strong></p><div class="card-tag">Photographie</div></div>
+            <div class="card-3d"><div class="card-top"><h4>Pack 1 Caméra (Brut)</h4><div class="card-price">160€</div></div><p class="card-desc">Filmage en plan fixe, remise des fichiers bruts.</p><div class="card-tag">Podcast & Vidéo</div></div>
+            <div class="card-3d"><div class="card-top"><h4>Pack 1 Caméra + Montage</h4><div class="card-price">300€</div></div><p class="card-desc">Montage complet, nettoyage son, intro/outro. Prêt pour YouTube.</p><div class="card-tag">Podcast & Vidéo</div></div>
+            <div class="card-3d"><div class="card-top"><h4>Pack 2 Caméras (Brut)</h4><div class="card-price">250€</div></div><p class="card-desc">Filmage multi-angles, remise des fichiers bruts.</p><div class="card-tag">Podcast & Vidéo</div></div>
+            <div class="card-3d"><div class="card-top"><h4>Pack 2 Caméras + Montage</h4><div class="card-price">380€</div></div><p class="card-desc">Montage pro complet, synchronisation, transitions + 1 extrait court pour vos réseaux sociaux.</p><div class="card-tag">Podcast & Vidéo</div></div>
+            <div class="card-3d featured"><div class="card-top"><h4>Direction Artistique</h4><div class="card-price">300€ <small>et +</small></div></div><p class="card-desc">Création d'un univers visuel fort, direction de shooting, stylisme, moodboard et sélection des décors pour une expérience sur mesure.</p><div class="card-tag">Sur mesure</div></div>
+          </div>
+        </div>
+      </div>
+      <p class="tarif-note">Extérieur & Branding : sur devis — Suivi d'image personnelle ou événementiel.</p>
+    </section>
+
+    <div class="section-divider"><svg class="divider-wave" viewBox="0 0 400 40" preserveAspectRatio="none"><path class="wave-path" d="M0 20 Q50 5 100 20 T200 20 T300 20 T400 20"/><path class="wave-path-2" d="M0 22 Q50 35 100 22 T200 22 T300 22 T400 22"/><circle class="center-dot" cx="200" cy="20" r="2.5"/></svg></div>
+
+    <section id="reservation" class="container">
+      <div class="reveal"><div class="accent-line">Prendre rendez-vous</div><h2>Réservez votre créneau</h2></div>
+      <div class="reservation-wrapper reveal" style="margin-top:2rem">
+        <div class="reservation-info">
+          <h3>Votre studio.<br>Votre moment.</h3>
+          <p style="color:var(--text-secondary);margin:1rem 0 2rem">Réservez en quelques étapes. Confirmation sous 24h.</p>
+          <div class="info-item"><div class="info-icon">🕐</div><div><div class="info-label">Horaires</div><div class="info-value">Mar.–Dim. : 10h–20h · Lundi fermé</div></div></div>
+          <div class="info-item"><div class="info-icon">📍</div><div><div class="info-label">Adresse</div><div class="info-value">Rue du Mail 13/15, 1050 Ixelles</div></div></div>
+          <div class="info-item"><div class="info-icon">✉️</div><div><div class="info-label">Email</div><div class="info-value">libertacreativite@gmail.com</div></div></div>
+          <div class="info-item"><div class="info-icon">📱</div><div><div class="info-label">Réservation</div><div class="info-value">Via DM Instagram ou Calendly</div></div></div>
+        </div>
+        <form class="reservation-form" onsubmit="handleBooking(event)">
+          <div class="form-row"><input type="text" class="form-input" placeholder="Prénom" required><input type="text" class="form-input" placeholder="Nom" required></div>
+          <div class="form-row"><input type="email" class="form-input" placeholder="Email" required><input type="tel" class="form-input" placeholder="Téléphone"></div>
+          <select class="form-input" required><option value="">Type de service</option><option>Location Studio — 70€</option><option>Location Podcast — dès 80€</option><option>Vestiaire — 50€</option><option>Événementiel Privé — 150€/h</option><option>Événementiel Corporate — 150€/h</option><option>Photo 30 min — 125€</option><option>Photo 1h — 185€</option><option>Pack 1 Caméra (Brut) — 160€</option><option>Pack 1 Caméra + Montage — 300€</option><option>Pack 2 Caméras (Brut) — 250€</option><option>Pack 2 Caméras + Montage — 380€</option><option>Direction Artistique — dès 300€</option></select>
+          <div class="form-row"><input type="date" class="form-input" required><select class="form-input" required><option value="">Créneau horaire</option><option>10:00–12:00</option><option>12:00–14:00</option><option>14:00–16:00</option><option>16:00–18:00</option><option>18:00–20:00</option></select></div>
+          <textarea class="form-input form-textarea" placeholder="Décrivez votre projet (optionnel)"></textarea>
+          <button type="submit" class="btn btn-primary" style="width:100%">Envoyer ma demande →</button>
+          <p style="text-align:center;color:var(--text-muted);font-size:0.8rem">Confirmation par email sous 24h · Gratuit et sans engagement</p>
+        </form>
+      </div>
+    </section>
+
+    <div class="section-divider"><svg class="divider-wave" viewBox="0 0 400 40" preserveAspectRatio="none"><path class="wave-path" d="M0 20 Q50 5 100 20 T200 20 T300 20 T400 20"/><path class="wave-path-2" d="M0 22 Q50 35 100 22 T200 22 T300 22 T400 22"/><circle class="center-dot" cx="200" cy="20" r="2.5"/></svg></div>
+
+    <section id="faq" class="container">
+      <div class="reveal" style="text-align:center"><div class="accent-line accent-line-center">Questions fréquentes</div><h2>FAQ</h2></div>
+      <div class="faq-container stagger-children" style="margin-top:2.5rem">
+        <div class="faq-item"><div class="faq-header">Peut-on visiter le studio avant de réserver ?<span class="faq-toggle">+</span></div><div class="faq-answer"><div class="faq-answer-inner">Oui, nous proposons des visites sur rendez-vous du mardi au dimanche. Contactez-nous par email ou via Instagram pour convenir d'un créneau.</div></div></div>
+        <div class="faq-item"><div class="faq-header">Peut-on apporter son propre matériel ?<span class="faq-toggle">+</span></div><div class="faq-answer"><div class="faq-answer-inner">Absolument ! Vous pouvez apporter votre propre matériel photo, vidéo ou audio. Le studio dispose également d'équipements de base mis à disposition.</div></div></div>
+        <div class="faq-item"><div class="faq-header">Le mobilier est-il inclus ?<span class="faq-toggle">+</span></div><div class="faq-answer"><div class="faq-answer-inner">Oui, le mobilier design et les décors soignés sont inclus dans la location. L'espace est entièrement modulable.</div></div></div>
+        <div class="faq-item"><div class="faq-header">Événements dansants acceptés ?<span class="faq-toggle">+</span></div><div class="faq-answer"><div class="faq-answer-inner">Les événements avec musique sont acceptés dans le respect des horaires et du voisinage. Nous en discutons au cas par cas.</div></div></div>
+        <div class="faq-item"><div class="faq-header">Proposez-vous des services additionnels ?<span class="faq-toggle">+</span></div><div class="faq-answer"><div class="faq-answer-inner">Oui, nous proposons des services de direction artistique, traiteur partenaire, et mise en place sur mesure.</div></div></div>
+      </div>
+    </section>
+
+    <div class="section-divider"><svg class="divider-wave" viewBox="0 0 400 40" preserveAspectRatio="none"><path class="wave-path" d="M0 20 Q50 5 100 20 T200 20 T300 20 T400 20"/><path class="wave-path-2" d="M0 22 Q50 35 100 22 T200 22 T300 22 T400 22"/><circle class="center-dot" cx="200" cy="20" r="2.5"/></svg></div>
+
+    <section id="contact" class="container">
+      <div class="reveal"><div class="accent-line">Nous contacter</div><h2>Parlons de votre projet.</h2><p style="color:var(--text-secondary);max-width:500px;margin:1.5rem 0 2rem">Prêt à collaborer ? Contactez-nous pour un devis personnalisé sous 24h.</p></div>
+      <div class="contact-grid">
+        <div class="reveal"><div class="contact-list">
+          <div class="info-item"><div class="info-icon">📧</div><div><div class="info-label">Email</div><div class="info-value">libertacreativite@gmail.com</div></div></div>
+          <div class="info-item"><div class="info-icon">📍</div><div><div class="info-label">Adresse</div><div class="info-value">Rue du Mail 13/15, 1050 Ixelles</div></div></div>
+          <div class="info-item"><div class="info-icon">🕐</div><div><div class="info-label">Horaires</div><div class="info-value">Mar.–Dim. : 10h–20h · Lundi fermé</div></div></div>
+          <div class="info-item"><div class="info-icon">📱</div><div><div class="info-label">Réseaux</div><div class="info-value">Instagram · Calendly</div></div></div>
+        </div></div>
+        <div class="reveal">
+          <div class="contact-map"><div style="font-size:3rem;color:var(--accent)">📍</div><p style="margin-top:1rem;color:var(--text)">Ixelles, Bruxelles</p><p style="color:var(--text-secondary)">Rue du Mail 13/15<br>1050 Ixelles</p></div>
+          <div class="access-grid">
+            <div class="access-card"><div class="info-label">Métro</div><div class="info-value"><strong>Porte de Namur</strong><br>Lignes 2 & 6 · 10 min</div></div>
+            <div class="access-card"><div class="info-label">Parking</div><div class="info-value"><strong>À 1 min à pied</strong><br>Parkings publics proches</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><div class="footer-logo">Libertà <span>Créativité</span></div><p class="footer-desc">Studio créatif polyvalent au cœur d'Ixelles.</p><div class="footer-socials"><div class="social-dot">ig</div><div class="social-dot">fb</div><div class="social-dot">yt</div></div></div>
+      <div class="footer-col"><h4>Services</h4><ul class="footer-links"><li><a href="#services">Location Studio</a></li><li><a href="#services">Podcast</a></li><li><a href="#services">Photographie</a></li><li><a href="#services">Vidéo & Montage</a></li><li><a href="#services">Direction Artistique</a></li><li><a href="#services">Événementiel</a></li></ul></div>
+      <div class="footer-col"><h4>Infos</h4><ul class="footer-links"><li><a href="#services">Tarifs</a></li><li><a href="#reservation">Réservation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Accès</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul class="footer-links"><li><a href="mailto:libertacreativite@gmail.com">Email</a></li><li><a href="#">Instagram</a></li><li><a href="#">Calendly</a></li></ul></div>
+    </div>
+    <div class="container footer-bottom"><div>© 2026 Libertà Créativité Studio · 13 rue du Mail, 1050 Ixelles</div><div style="display:flex;gap:1.5rem;align-items:center"><span>🌿 Éco-responsable</span><span>Accessible PMR</span><a href="admin.html" style="color:#8A7D72;text-decoration:none;font-size:.65rem;opacity:.5;transition:opacity .3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5">⚙ Admin</a></div></div>
+  </footer>
+
+  </div><!-- .site-content -->
+
+  <!-- ═══ THREE.JS + GSAP ═══ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+  </script>
+
+  <!-- ═══ IMMERSIVE 3D INTRO SCRIPT ═══ -->
+  <script>
+  (() => {
+    'use strict';
+
+    const overlay = document.getElementById('introOverlay');
+    const canvas  = document.getElementById('introCanvas');
+    const flashEl = document.getElementById('introFlash');
+    const dofEl   = document.getElementById('introDof');
+    const progEl  = document.getElementById('introProgress');
+    const skipBtn = document.getElementById('introSkip');
+    const site    = document.getElementById('siteContent');
+
+    function hasWebGL() {
+      try { const c = document.createElement('canvas'); return !!(c.getContext('webgl') || c.getContext('experimental-webgl')); }
+      catch(e) { return false; }
+    }
+
+    function revealSite() {
+      overlay.classList.add('fade-out');
+      site.classList.add('visible');
+      setTimeout(() => overlay.remove(), 1200);
+    }
+
+    if (!hasWebGL() || typeof THREE === 'undefined' || typeof gsap === 'undefined') {
+      revealSite();
+      return;
+    }
+
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    const pixelRatio = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2);
+    const particleCount = isMobile ? 80 : 250;
+
+    // ── SCENE ──
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xFBF8F4);
+    scene.fog = new THREE.FogExp2(0xFBF8F4, 0.04);
+
+    const cam = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.05, 60);
+    cam.position.set(0, 0.25, 5.5);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(pixelRatio);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.9;
+    renderer.shadowMap.enabled = !isMobile;
+
+    // ── LIGHTING ──
+    scene.add(new THREE.AmbientLight(0xf5efe6, 0.6));
+
+    const keyLight = new THREE.SpotLight(0xfff8e7, 1.3, 25, Math.PI * 0.18, 0.5, 1);
+    keyLight.position.set(5, 6, 7);
+    keyLight.target.position.set(0, 0, 0);
+    scene.add(keyLight); scene.add(keyLight.target);
+
+    const fillLight = new THREE.PointLight(0xC49B6C, 0.5, 12);
+    fillLight.position.set(-4, 2, 5);
+    scene.add(fillLight);
+
+    const rimLight = new THREE.PointLight(0xE0CFBA, 0.5, 10);
+    rimLight.position.set(0, 3, -4);
+    scene.add(rimLight);
+
+    const lensSpot = new THREE.SpotLight(0xffffff, 0.9, 8, Math.PI * 0.06, 0.4, 1);
+    lensSpot.position.set(0, 0.3, 4.5);
+    lensSpot.target.position.set(0, 0, 1.2);
+    scene.add(lensSpot); scene.add(lensSpot.target);
+
+    const backGlow = new THREE.PointLight(0xC49B6C, 1.5, 8);
+    backGlow.position.set(0, 1.5, -5);
+    scene.add(backGlow);
+
+    // ── MATERIALS ──
+    const matBody = new THREE.MeshStandardMaterial({ color:0x3B2E2A, metalness:0.25, roughness:0.7 });
+    const matMetal = new THREE.MeshStandardMaterial({ color:0x777777, metalness:0.9, roughness:0.2 });
+    const matAccent = new THREE.MeshStandardMaterial({ color:0xC49B6C, metalness:0.5, roughness:0.3, emissive:0xC49B6C, emissiveIntensity:0.1 });
+    const matGrip = new THREE.MeshStandardMaterial({ color:0x1a1a1a, roughness:0.9 });
+    const matLensRing = new THREE.MeshStandardMaterial({ color:0x2a2a2a, metalness:0.8, roughness:0.3 });
+    const matGlass = new THREE.MeshPhysicalMaterial({
+      color:0x88aacc, metalness:0.02, roughness:0.05,
+      transmission:0.92, thickness:0.35, ior:1.5,
+      clearcoat:1.0, clearcoatRoughness:0.02,
+      envMapIntensity:1.5, transparent:true, opacity:0.9
+    });
+    const matDiaph = new THREE.MeshStandardMaterial({ color:0x2C1F1A, metalness:0.9, roughness:0.4, side:THREE.DoubleSide });
+    const matWall = new THREE.MeshStandardMaterial({ color:0xFBF8F4, roughness:0.95 });
+    const matBackdrop = new THREE.MeshStandardMaterial({ color:0xC49B6C, emissive:0xC49B6C, emissiveIntensity:0.05, roughness:0.9 });
+    const matSoftbox = new THREE.MeshStandardMaterial({ color:0xfff8e7, emissive:0xfff8e7, emissiveIntensity:0.7, transparent:true, opacity:0.85 });
+
+    // ── STUDIO ENVIRONMENT ──
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.MeshStandardMaterial({ color:0x1a1512, roughness:0.95 }));
+    floor.rotation.x = -Math.PI/2; floor.position.y = -2.2; scene.add(floor);
+
+    const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(7, 5), matBackdrop);
+    backdrop.position.set(0, 0.5, -5.5); scene.add(backdrop);
+
+    // Softbox left
+    const sb1 = new THREE.Group();
+    sb1.add(new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.9, 0.12), matSoftbox));
+    const sbStand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.035, 3, 8), matMetal);
+    sbStand1.position.y = -1.8; sb1.add(sbStand1);
+    sb1.position.set(-3.2, 1.6, -2.2); sb1.rotation.y = 0.35; scene.add(sb1);
+
+    // Softbox right
+    const sb2 = sb1.clone();
+    sb2.position.set(3.2, 1.8, -1.8); sb2.rotation.y = -0.4; scene.add(sb2);
+
+    // Tripod
+    const tripod = new THREE.Group();
+    tripod.add(new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.12, 12), matMetal));
+    for(let i=0; i<3; i++){
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.018, 2.6, 6), matMetal);
+      leg.position.y = -1.4;
+      leg.rotation.z = (i-1) * 0.15;
+      leg.rotation.x = i * 2.1;
+      tripod.add(leg);
+    }
+    tripod.position.set(-2, 0.7, -3.2); scene.add(tripod);
+
+    // Reflector
+    const reflector = new THREE.Group();
+    reflector.add(new THREE.Mesh(new THREE.CircleGeometry(0.55, 24), new THREE.MeshStandardMaterial({ color:0xeeeeee, metalness:0.7, roughness:0.25, side:THREE.DoubleSide })));
+    const refStand = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.022, 1.8, 6), matMetal);
+    refStand.position.y = -1.1; reflector.add(refStand);
+    reflector.position.set(2.5, 0.6, -3.5); reflector.rotation.y = -0.5; scene.add(reflector);
+
+    // ── CAMERA MODEL ──
+    const camModel = new THREE.Group();
+    const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.5, 1.2, 2, 2, 2), matBody);
+    camModel.add(body);
+    const grip = new THREE.Mesh(new THREE.BoxGeometry(0.45, 1.55, 1.25), matGrip);
+    grip.position.set(1.1, -0.05, 0); camModel.add(grip);
+    const vf = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.35, 0.25), matBody);
+    vf.position.set(0, 0.92, -0.1); camModel.add(vf);
+    const hs = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.05, 0.35), matMetal);
+    hs.position.set(0, 1.1, -0.1); camModel.add(hs);
+    const shutterBtn = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.06, 16), matAccent);
+    shutterBtn.position.set(0.65, 0.78, 0.38); camModel.add(shutterBtn);
+    const modeDial = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.12, 20), matMetal);
+    modeDial.position.set(-0.5, 0.8, 0.22); camModel.add(modeDial);
+    const stripe = new THREE.Mesh(new THREE.BoxGeometry(2.22, 0.03, 1.22), matAccent);
+    stripe.position.y = 0.32; camModel.add(stripe);
+
+    // Strap lugs
+    [-1,1].forEach(s => {
+      const lug = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.018, 8, 16), matMetal);
+      lug.position.set(s*1.12, 0.55, 0); lug.rotation.y = Math.PI/2; camModel.add(lug);
+    });
+
+    // ── LENS ASSEMBLY ──
+    const lensGroup = new THREE.Group();
+    const barrels = [
+      { r1:0.55,r2:0.58,h:0.6,z:0.85,mat:matLensRing },
+      { r1:0.48,r2:0.55,h:0.5,z:1.3,mat:matBody },
+      { r1:0.42,r2:0.48,h:0.3,z:1.58,mat:matLensRing },
+      { r1:0.39,r2:0.42,h:0.18,z:1.78,mat:matBody }
+    ];
+    barrels.forEach(b => {
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(b.r1,b.r2,b.h,48), b.mat);
+      m.rotation.x = Math.PI/2; m.position.z = b.z; lensGroup.add(m);
+    });
+
+    const focusRing = new THREE.Mesh(new THREE.TorusGeometry(0.54,0.04,8,48), matAccent);
+    focusRing.position.z = 1.05; lensGroup.add(focusRing);
+    const zoomRing = new THREE.Mesh(new THREE.TorusGeometry(0.46,0.028,8,48), matMetal);
+    zoomRing.position.z = 1.4; lensGroup.add(zoomRing);
+
+    [0.78,1.1,1.38].forEach(z => {
+      const lens = new THREE.Mesh(new THREE.CircleGeometry(0.33,32), matGlass);
+      lens.position.z = z; lensGroup.add(lens);
+    });
+    const frontGlass = new THREE.Mesh(new THREE.CircleGeometry(0.38,48), matGlass);
+    frontGlass.position.z = 1.88; lensGroup.add(frontGlass);
+    const innerRefl = new THREE.Mesh(new THREE.RingGeometry(0.2,0.38,48), new THREE.MeshStandardMaterial({ color:0x446677, metalness:0.9, roughness:0.1, side:THREE.DoubleSide }));
+    innerRefl.position.z = 1.86; lensGroup.add(innerRefl);
+
+    // ── DIAPHRAGM ──
+    const diaphragmGroup = new THREE.Group();
+    diaphragmGroup.position.z = 0.9;
+    const blades = [];
+    for(let i=0; i<8; i++){
+      const angle = (i/8) * Math.PI * 2;
+      const shape = new THREE.Shape();
+      shape.moveTo(0,0); shape.lineTo(0.4,-0.1); shape.lineTo(0.4,0.1); shape.closePath();
+      const blade = new THREE.Mesh(new THREE.ShapeGeometry(shape), matDiaph);
+      blade.rotation.z = angle; blade.userData.baseAngle = angle;
+      blades.push(blade); diaphragmGroup.add(blade);
+    }
+    lensGroup.add(diaphragmGroup);
+    camModel.add(lensGroup);
+    camModel.position.set(0,0,0);
+    camModel.rotation.set(0.03,0.08,0);
+    scene.add(camModel);
+
+    // ── DUST PARTICLES ──
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(particleCount*3);
+    const pVel = [];
+    for(let i=0; i<particleCount; i++){
+      pPos[i*3] = (Math.random()-0.5)*8;
+      pPos[i*3+1] = (Math.random()-0.5)*6;
+      pPos[i*3+2] = (Math.random()-0.5)*10-1;
+      pVel.push({ x:(Math.random()-0.5)*0.003, y:(Math.random()-0.3)*0.0015, z:(Math.random()-0.5)*0.0025 });
+    }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
+    const pMat = new THREE.PointsMaterial({ color:0xfff8e7, size:0.02, transparent:true, opacity:0.3, blending:THREE.AdditiveBlending, depthWrite:false });
+    const particles = new THREE.Points(pGeo, pMat);
+    scene.add(particles);
+
+    // ── STATE ──
+    let done = false;
+    const state = { camZ:5.5, camY:0.25, fov:48, exposure:0.9, flashOpacity:0, dofOpacity:0, diaphragm:0.18, progress:0 };
+
+    const tl = gsap.timeline({ onComplete:()=>{ done=true; revealSite(); } });
+
+    // Phase 1: breathe
+    tl.to(state, { camZ:5.8, duration:1, ease:'power1.inOut' }, 0);
+    // Phase 2: approach
+    tl.to(state, { camZ:2.2, camY:0.08, fov:36, duration:2, ease:'power2.in' }, 0.9);
+    tl.to(state, { diaphragm:0.65, duration:1.6, ease:'power1.inOut' }, 1.1);
+    tl.to(state, { dofOpacity:0.7, duration:1, ease:'power1.in' }, 1.5);
+    // Phase 3: enter lens
+    tl.to(state, { camZ:0.25, fov:22, exposure:2.8, duration:1.5, ease:'power3.in' }, 2.8);
+    tl.to(state, { diaphragm:0.95, duration:0.7, ease:'power2.in' }, 3.1);
+    tl.to(state, { dofOpacity:1, duration:0.4 }, 3.3);
+    // Phase 4: flash
+    tl.to(state, { flashOpacity:1, exposure:10, duration:0.35, ease:'power4.in' }, 4.2);
+    tl.to(state, { flashOpacity:0, duration:0.35, ease:'power2.out' }, 4.5);
+    tl.to(state, { progress:100, duration:5, ease:'none' }, 0);
+
+    function render(){
+      if(done) return;
+      requestAnimationFrame(render);
+      const t = performance.now()*0.001;
+
+      cam.position.set(0, state.camY + Math.sin(t*0.5)*0.01, state.camZ);
+      cam.fov = state.fov; cam.updateProjectionMatrix();
+
+      camModel.position.y = Math.sin(t*0.7)*0.015;
+      camModel.rotation.y = 0.08 + Math.sin(t*0.35)*0.008;
+
+      const d = state.diaphragm;
+      blades.forEach((blade,i) => {
+        const ba = blade.userData.baseAngle;
+        blade.rotation.z = ba + d * 0.42;
+        blade.position.x = Math.cos(ba) * (0.06 + d * 0.16);
+        blade.position.y = Math.sin(ba) * (0.06 + d * 0.16);
+        blade.scale.set(1-d*0.25, 1-d*0.18, 1);
+      });
+
+      matGlass.emissive = new THREE.Color(0xC49B6C);
+      matGlass.emissiveIntensity = Math.max(0, (5.5-state.camZ)/5.5) * 0.4;
+
+      const posArr = pGeo.attributes.position.array;
+      for(let i=0; i<particleCount; i++){
+        posArr[i*3] += pVel[i].x; posArr[i*3+1] += pVel[i].y; posArr[i*3+2] += pVel[i].z;
+        if(posArr[i*3+2]>6) posArr[i*3+2]=-6;
+        if(posArr[i*3+1]>4) posArr[i*3+1]=-4;
+      }
+      pGeo.attributes.position.needsUpdate = true;
+
+      renderer.toneMappingExposure = state.exposure;
+      flashEl.style.opacity = state.flashOpacity;
+      dofEl.style.opacity = state.dofOpacity;
+      progEl.style.width = state.progress + '%';
+
+      renderer.render(scene, cam);
+    }
+
+    skipBtn.addEventListener('click', ()=>{ done=true; tl.kill(); revealSite(); });
+    overlay.addEventListener('click', (e)=>{ if(e.target===overlay||e.target===canvas){ done=true; tl.kill(); revealSite(); } });
+
+    window.addEventListener('resize', ()=>{
+      cam.aspect = window.innerWidth/window.innerHeight; cam.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    render();
+  })();
+  </script>
+
+  <!-- ═══ SITE SCRIPTS ═══ -->
+  <script>
+    (()=>{
+      const dot=document.getElementById('cursorDot'), ring=document.getElementById('cursorRing');
+      if(!window.matchMedia('(pointer:fine)').matches){ dot.style.display='none'; ring.style.display='none'; document.body.classList.remove('has-custom-cursor'); return; }
+      let mx=0,my=0,dx=0,dy=0,rx=0,ry=0;
+      document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; });
+      function anim(){ dx+=(mx-dx)*0.2; dy+=(my-dy)*0.2; rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; dot.style.left=dx+'px'; dot.style.top=dy+'px'; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(anim); }
+      anim();
+      const isel='a,button,.faq-header,.btn,input,select,textarea,.social-dot', csel='.card-3d';
+      document.addEventListener('mouseover',e=>{ const c=e.target.closest(csel),i=e.target.closest(isel); if(c){ dot.classList.add('on-card'); ring.classList.add('on-card'); dot.classList.remove('interactive'); ring.classList.remove('interactive'); } else if(i){ dot.classList.add('interactive'); ring.classList.add('interactive'); dot.classList.remove('on-card'); ring.classList.remove('on-card'); } });
+      document.addEventListener('mouseout',e=>{ const c=e.target.closest(csel),i=e.target.closest(isel); if(c||i){ dot.classList.remove('interactive','on-card'); ring.classList.remove('interactive','on-card'); } });
+    })();
+
+    document.querySelectorAll('.card-3d').forEach(card=>{ let tx=0,ty=0,cx=0,cy=0,raf=null; card.addEventListener('mousemove',e=>{ const r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top; tx=((x/r.width)-0.5)*14; ty=((y/r.height)-0.5)*-14; if(!raf) raf=function a(){ cx+=(tx-cx)*0.1; cy+=(ty-cy)*0.1; card.style.transform=`perspective(800px) rotateX(${cy}deg) rotateY(${cx}deg)`; if(Math.abs(tx-cx)>0.01||Math.abs(ty-cy)>0.01) requestAnimationFrame(a); else raf=null; }; requestAnimationFrame(raf); }); card.addEventListener('mouseleave',()=>{ tx=0;ty=0; if(raf){cancelAnimationFrame(raf);raf=null;} function r(){ cx+=(0-cx)*0.08; cy+=(0-cy)*0.08; card.style.transform=`perspective(800px) rotateX(${cy}deg) rotateY(${cx}deg)`; if(Math.abs(cx)>0.05||Math.abs(cy)>0.05) requestAnimationFrame(r); else card.style.transform=''; } requestAnimationFrame(r); }); });
+
+    document.querySelectorAll('.counter-value').forEach(c=>{ const o=new IntersectionObserver(e=>{ e.forEach(x=>{ if(x.isIntersecting&&!x.target.dataset.c){ x.target.dataset.c='1'; const t=parseInt(x.target.dataset.count),d=2000,s=performance.now(); function a(n){ const p=Math.min((n-s)/d,1); x.target.textContent=Math.round(t*(1-Math.pow(1-p,4))); if(p<1) requestAnimationFrame(a); } requestAnimationFrame(a); } }); },{threshold:0.5}); o.observe(c); });
+
+    const hamburger=document.getElementById('hamburgerBtn'),mobileMenu=document.getElementById('mobileMenu'),menuClose=document.getElementById('menuCloseBtn'),mobileLinks=mobileMenu.querySelectorAll('a');
+    function toggleMenu(){ hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':''; }
+    hamburger.addEventListener('click',toggleMenu); menuClose.addEventListener('click',toggleMenu); mobileLinks.forEach(l=>l.addEventListener('click',toggleMenu));
+
+    const header=document.getElementById('mainHeader'),navLinks=document.querySelectorAll('#navLinks a[data-section]'),sections=document.querySelectorAll('section[id]');
+    window.addEventListener('scroll',()=>{ header.classList.toggle('scrolled',window.scrollY>60); let c='accueil'; sections.forEach(s=>{ if(window.scrollY>=s.offsetTop-200) c=s.id; }); navLinks.forEach(l=>l.classList.toggle('active',l.dataset.section===c)); });
+
+    document.querySelectorAll('.reveal,.stagger-children').forEach(el=>new IntersectionObserver(e=>{ e.forEach(x=>{ if(x.isIntersecting) x.target.classList.add('visible'); }); },{threshold:0.1,rootMargin:'0px 0px -40px 0px'}).observe(el));
+
+    document.querySelectorAll('.faq-header').forEach(h=>{ h.addEventListener('click',()=>{ const item=h.parentElement,ans=item.querySelector('.faq-answer'); document.querySelectorAll('.faq-item.open').forEach(o=>{ if(o!==item){ o.classList.remove('open'); o.querySelector('.faq-answer').style.maxHeight='0'; } }); item.classList.toggle('open'); ans.style.maxHeight=item.classList.contains('open')?ans.scrollHeight+'px':'0'; }); });
+
+    function handleBooking(e){
+      e.preventDefault();
+      const btn=e.target.querySelector('button[type="submit"]');
+      btn.textContent='Envoi en cours...'; btn.disabled=true;
+      // Gather form data
+      const inputs=e.target.querySelectorAll('.form-input');
+      const serviceMap={'Location Studio — 70€':70,'Location Podcast — dès 80€':80,'Vestiaire — 50€':50,'Événementiel Privé — 150€/h':150,'Événementiel Corporate — 150€/h':150,'Photo 30 min — 125€':125,'Photo 1h — 185€':185,'Pack 1 Caméra (Brut) — 160€':160,'Pack 1 Caméra + Montage — 300€':300,'Pack 2 Caméras (Brut) — 250€':250,'Pack 2 Caméras + Montage — 380€':380,'Direction Artistique — dès 300€':300};
+      const service=inputs[4]?inputs[4].value:'';
+      const reservation={
+        id:Date.now().toString(36)+Math.random().toString(36).substr(2,5),
+        firstName:inputs[0]?inputs[0].value:'',
+        lastName:inputs[1]?inputs[1].value:'',
+        email:inputs[2]?inputs[2].value:'',
+        phone:inputs[3]?inputs[3].value:'',
+        service:service,
+        date:inputs[5]?inputs[5].value:'',
+        slot:inputs[6]?inputs[6].value:'',
+        message:inputs[7]?inputs[7].value:'',
+        price:serviceMap[service]||0,
+        status:'pending',
+        createdAt:new Date().toISOString()
+      };
+      // Save to localStorage for admin dashboard sync
+      try{
+        const existing=JSON.parse(localStorage.getItem('lc_reservations')||'[]');
+        existing.push(reservation);
+        localStorage.setItem('lc_reservations',JSON.stringify(existing));
+      }catch(err){console.warn('localStorage save failed',err);}
+      setTimeout(()=>{
+        btn.textContent='✓ Demande envoyée !';
+        btn.style.background='#6a8f5f'; btn.style.borderColor='#6a8f5f';
+        setTimeout(()=>{
+          btn.textContent='Envoyer ma demande →';
+          btn.style.background=''; btn.style.borderColor='';
+          btn.disabled=false; e.target.reset();
+        },3000);
+      },1200);
+    }
+  </script>
+</body>
+</html>

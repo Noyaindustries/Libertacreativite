@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · Libertà Créativité</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ═══════════ LOGIN OVERLAY ═══════════ -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <h1>Libertà <span>Créativité</span></h1>
+    <p>Espace d'administration</p>
+    <form onsubmit="handleLogin(event)">
+      <div class="login-field">
+        <label>Identifiant</label>
+        <input type="text" id="loginUser" placeholder="admin" required>
+      </div>
+      <div class="login-field">
+        <label>Mot de passe</label>
+        <input type="password" id="loginPass" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="login-btn">Se connecter</button>
+      <div class="login-error" id="loginError">Identifiant ou mot de passe incorrect.</div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════ LAYOUT ═══════════ -->
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">Libertà <span>Créativité</span></div>
+      <div class="sidebar-sub">Administration</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <a class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
+        <span class="nav-icon">📊</span> Tableau de bord
+      </a>
+      <a class="nav-item" data-page="reservations" onclick="navigate('reservations')">
+        <span class="nav-icon">📋</span> Réservations
+      </a>
+      <a class="nav-item" data-page="clients" onclick="navigate('clients')">
+        <span class="nav-icon">👤</span> Clients
+      </a>
+      <a class="nav-item" data-page="invoices" onclick="navigate('invoices')">
+        <span class="nav-icon">🧾</span> Factures
+      </a>
+      <div class="nav-section-label">Planification</div>
+      <a class="nav-item" data-page="planning" onclick="navigate('planning')">
+        <span class="nav-icon">📅</span> Planning
+      </a>
+      <div class="nav-section-label">Configuration</div>
+      <a class="nav-item" data-page="system" onclick="navigate('system')">
+        <span class="nav-icon">⚙️</span> Système
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="index.html" target="_blank">🌐 Voir le site</a>
+      <button onclick="logout()">🚪 Déconnexion</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:.8rem">
+        <button class="mobile-burger" onclick="toggleSidebar()">☰</button>
+        <span class="topbar-title" id="topbarTitle">Tableau de bord</span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-user">Admin</span>
+      </div>
+    </div>
+
+    <!-- ═══════════ PAGE: DASHBOARD ═══════════ -->
+    <div class="page" id="page-dashboard">
+      <div class="page-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Réservations du jour</div>
+            <div class="stat-value" id="statTodayRes">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Réservations du mois</div>
+            <div class="stat-value" id="statMonthRes">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Chiffre d'affaires mensuel</div>
+            <div class="stat-value" id="statRevenue">0,00 €</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Taux d'occupation</div>
+            <div class="stat-value" id="statOccupation">0%</div>
+          </div>
+        </div>
+        <div class="dash-grid">
+          <div class="dash-section">
+            <div class="dash-section-title">Réservations par mois</div>
+            <canvas id="dashChart" style="width:100%;height:200px"></canvas>
+          </div>
+          <div class="dash-section">
+            <div class="dash-section-title">Planning de la semaine</div>
+            <div id="dashWeekPreview"></div>
+          </div>
+        </div>
+        <div class="dash-section" style="margin-top:1.5rem">
+          <div class="dash-section-title">Dernières réservations <a style="font-size:.72rem;color:var(--accent);cursor:pointer" onclick="navigate('reservations')">Tout voir →</a></div>
+          <div id="dashLastReservations"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PAGE: RÉSERVATIONS ═══════════ -->
+    <div class="page" id="page-reservations" style="display:none">
+      <div class="page-content">
+        <div class="table-wrap">
+          <div class="table-header">
+            <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+              <span class="table-title">Réservations</span>
+              <div class="filter-tabs">
+                <button class="filter-tab active" onclick="resFilter='all';this.parentElement.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');renderReservations()">Toutes</button>
+                <button class="filter-tab" onclick="resFilter='confirmed';this.parentElement.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');renderReservations()">Confirmées</button>
+                <button class="filter-tab" onclick="resFilter='pending';this.parentElement.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');renderReservations()">En attente</button>
+                <button class="filter-tab" onclick="resFilter='cancelled';this.parentElement.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');renderReservations()">Annulées</button>
+              </div>
+            </div>
+            <div class="table-actions">
+              <input type="search" class="search-input" placeholder="Rechercher..." oninput="resSearch=this.value;renderReservations()">
+              <button class="btn btn-primary" onclick="openNewReservation()">+ Nouvelle</button>
+              <button class="btn btn-outline" onclick="exportReservationsCSV()">↓ CSV</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>ID</th><th>Client</th><th>Service</th><th>Date</th><th>Créneau</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead>
+              <tbody id="reservationsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PAGE: CLIENTS ═══════════ -->
+    <div class="page" id="page-clients" style="display:none">
+      <div class="page-content">
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">Clients</span>
+            <input type="search" class="search-input" placeholder="Rechercher un client..." oninput="clientSearch=this.value;renderClients()">
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Nom</th><th>Prénom</th><th>Email</th><th>Téléphone</th><th>Réservations</th><th>Dernière</th></tr></thead>
+              <tbody id="clientsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PAGE: FACTURES ═══════════ -->
+    <div class="page" id="page-invoices" style="display:none">
+      <div class="page-content">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+          <div>
+            <div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent)">Total du mois</div>
+            <div style="font-family:var(--font-heading);font-size:1.8rem" id="invoiceMonthTotal">0,00 €</div>
+          </div>
+          <div style="display:flex;gap:.6rem">
+            <button class="btn btn-primary" onclick="openNewInvoice()">+ Créer une facture</button>
+            <button class="btn btn-outline" onclick="exportInvoicesCSV()">↓ Export</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>N° Facture</th><th>Client</th><th>Montant</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+              <tbody id="invoicesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PAGE: PLANNING ═══════════ -->
+    <div class="page" id="page-planning" style="display:none">
+      <div class="page-content">
+        <div class="calendar-controls">
+          <div class="cal-view-tabs">
+            <button class="filter-tab cal-view-tab active" data-view="month" onclick="setCalView('month')">Mois</button>
+            <button class="filter-tab cal-view-tab" data-view="week" onclick="setCalView('week')">Semaine</button>
+          </div>
+          <div class="cal-nav-group">
+            <button class="cal-nav-btn" onclick="calPrev()">‹</button>
+            <div class="cal-period" id="calPeriod"></div>
+            <button class="cal-nav-btn" onclick="calNext()">›</button>
+          </div>
+        </div>
+        <div id="calGrid" class="cal-month-grid"></div>
+        <div class="cal-legend">
+          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>Location Studio</div>
+          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--accent)"></div>Événementiel</div>
+          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--purple)"></div>Photographie</div>
+          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue)"></div>Podcast / Vidéo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PAGE: SYSTÈME ═══════════ -->
+    <div class="page" id="page-system" style="display:none">
+      <div class="page-content">
+        <div class="settings-grid">
+
+          <div class="settings-card">
+            <h3>Informations du studio</h3>
+            <div class="settings-item"><span class="settings-item-label">Nom</span><input class="settings-item-value" id="sysStudioName"></div>
+            <div class="settings-item"><span class="settings-item-label">Adresse</span><input class="settings-item-value" id="sysAddress" style="width:220px"></div>
+            <div class="settings-item"><span class="settings-item-label">Email</span><input class="settings-item-value" id="sysEmail"></div>
+            <div class="settings-item"><span class="settings-item-label">Téléphone</span><input class="settings-item-value" id="sysPhone"></div>
+            <div class="settings-item"><span class="settings-item-label">Instagram</span><input class="settings-item-value" id="sysInstagram" placeholder="@handle"></div>
+          </div>
+
+          <div class="settings-card">
+            <h3>Capacité & Surface</h3>
+            <div class="settings-item"><span class="settings-item-label">Capacité max.</span><input type="number" class="settings-item-value" id="sysCapacity" style="width:80px"> personnes</div>
+            <div class="settings-item"><span class="settings-item-label">Superficie</span><input type="number" class="settings-item-value" id="sysSurface" style="width:80px"> m²</div>
+          </div>
+
+          <div class="settings-card">
+            <h3>Horaires d'ouverture</h3>
+            <div class="settings-item"><span class="settings-item-label">Ouverture</span><input type="time" class="settings-item-value" id="sysOpenTime"></div>
+            <div class="settings-item"><span class="settings-item-label">Fermeture</span><input type="time" class="settings-item-value" id="sysCloseTime"></div>
+            <div style="margin-top:1rem">
+              <div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem">Jours d'ouverture</div>
+              <div style="display:flex;flex-wrap:wrap;gap:.6rem">
+                <label style="display:flex;align-items:center;gap:.3rem;font-size:.8rem;cursor:pointer"><input type="checkbox" id="day-lun"> Lun</label>
+                <label style="display:flex;align-items:center;gap:.3rem;font-size:.8rem;cursor:pointer"><input type="checkbox" id="day-mar"> Mar</label>
+                <label style="display:flex;align-items:center;gap:.3rem;font-size:.8rem;cursor:pointer"><input type="checkbox" id="day-mer"> Mer</label>
+                <label style="display:flex;align-items:center;gap:.3rem;font-size:.8rem;cursor:pointer"><input type="checkbox" id="day-jeu"> Jeu</label>
+                <label style="display:flex;align-items:center;gap:.3rem;font-size:.8rem;cursor:pointer"><input type="checkbox" id="day-ven"> Ven</label>
+                <label style="display:flex;align-items:center;gap:.3rem;font-size:.8rem;cursor:pointer"><input type="checkbox" id="day-sam"> Sam</label>
+                <label style="display:flex;align-items:center;gap:.3rem;font-size:.8rem;cursor:pointer"><input type="checkbox" id="day-dim"> Dim</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>Administration</h3>
+            <div class="settings-item"><span class="settings-item-label">Identifiant</span><input class="settings-item-value" id="sysAdminUser"></div>
+            <div class="settings-item"><span class="settings-item-label">Nouveau mot de passe</span><input type="password" class="settings-item-value" id="sysNewPass" placeholder="••••"></div>
+            <div class="settings-actions">
+              <button class="btn btn-outline btn-sm" onclick="changePassword()">Modifier le mot de passe</button>
+            </div>
+            <div style="margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1rem">
+              <div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem">Données</div>
+              <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+                <button class="btn btn-outline btn-sm" onclick="exportData()">↓ Exporter JSON</button>
+                <button class="btn btn-outline btn-sm" onclick="importData()">↑ Importer JSON</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div style="margin-top:1.5rem;text-align:right">
+          <button class="btn btn-primary" onclick="saveSystem()">Sauvegarder les paramètres</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- .main-content -->
+</div><!-- .admin-layout -->
+
+<!-- ═══════════ MODALS ═══════════ -->
+
+<!-- Modal: New Reservation -->
+<div class="modal-overlay" id="modalReservation">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Nouvelle réservation</span>
+      <button class="modal-close" onclick="closeModal('modalReservation')">✕</button>
+    </div>
+    <form onsubmit="saveNewReservation(event)">
+      <div class="form-row">
+        <div class="form-group"><label>Prénom</label><input class="form-control" name="firstName" required></div>
+        <div class="form-group"><label>Nom</label><input class="form-control" name="lastName" required></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Email</label><input class="form-control" name="email" type="email" required></div>
+        <div class="form-group"><label>Téléphone</label><input class="form-control" name="phone"></div>
+      </div>
+      <div class="form-group">
+        <label>Service</label>
+        <select class="form-control" name="service" required>
+          <option value="">Sélectionner un service</option>
+          <option>Location Studio — 70€</option>
+          <option>Location Podcast — dès 80€</option>
+          <option>Vestiaire — 50€</option>
+          <option>Événementiel Privé — 150€/h</option>
+          <option>Événementiel Corporate — 150€/h</option>
+          <option>Photo 30 min — 125€</option>
+          <option>Photo 1h — 185€</option>
+          <option>Pack 1 Caméra (Brut) — 160€</option>
+          <option>Pack 1 Caméra + Montage — 300€</option>
+          <option>Pack 2 Caméras (Brut) — 250€</option>
+          <option>Pack 2 Caméras + Montage — 380€</option>
+          <option>Direction Artistique — dès 300€</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Date</label><input class="form-control" name="date" type="date" required></div>
+        <div class="form-group">
+          <label>Créneau</label>
+          <select class="form-control" name="slot" required>
+            <option value="">Choisir</option>
+            <option>10:00–12:00</option>
+            <option>12:00–14:00</option>
+            <option>14:00–16:00</option>
+            <option>16:00–18:00</option>
+            <option>18:00–20:00</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Message (optionnel)</label><textarea class="form-control" name="message" rows="3"></textarea></div>
+      <button type="submit" class="btn btn-primary" style="width:100%">Créer la réservation</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Client Detail -->
+<div class="modal-overlay" id="modalClient">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Fiche client</span>
+      <button class="modal-close" onclick="closeModal('modalClient')">✕</button>
+    </div>
+    <div id="modalClientContent"></div>
+  </div>
+</div>
+
+<!-- Modal: New Invoice -->
+<div class="modal-overlay" id="modalInvoice">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Créer une facture</span>
+      <button class="modal-close" onclick="closeModal('modalInvoice')">✕</button>
+    </div>
+    <form onsubmit="saveNewInvoice(event)">
+      <div class="form-group">
+        <label>Réservation associée</label>
+        <select class="form-control" id="invoiceResSelect" required></select>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%">Générer la facture</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: View Invoice -->
+<div class="modal-overlay" id="modalInvoiceView">
+  <div class="modal" style="max-width:750px">
+    <div class="modal-header">
+      <span class="modal-title">Aperçu facture</span>
+      <button class="modal-close" onclick="closeModal('modalInvoiceView')">✕</button>
+    </div>
+    <div id="invoiceViewContent"></div>
+  </div>
+</div>
+
+<!-- Modal: Day Detail -->
+<div class="modal-overlay" id="modalDay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Détails du jour</span>
+      <button class="modal-close" onclick="closeModal('modalDay')">✕</button>
+    </div>
+    <div id="modalDayContent"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>
