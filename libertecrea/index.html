@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
@@ -374,6 +375,10 @@
       *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
       .reveal,.stagger-children>*{opacity:1;transform:none}
     }
+    svg[class*="lucide"] { width: 1.2em; height: 1.2em; vertical-align: middle; }
+    .info-icon svg[class*="lucide"] { width: 24px; height: 24px; }
+    .hero-feat-icon svg[class*="lucide"] { width: 32px; height: 32px; }
+    .contact-map svg[class*="lucide"] { width: 48px; height: 48px; }
   </style>
 </head>
 <body class="has-custom-cursor">
@@ -386,7 +391,7 @@
     <div class="intro-dof" id="introDof"></div>
     <div class="intro-flash" id="introFlash"></div>
     <div class="intro-progress" id="introProgress"></div>
-    <div class="intro-brand">Libertà Créativité</div>
+    <div class="intro-brand">Liberta Creativite</div>
     <button class="intro-skip" id="introSkip">Passer l'intro →</button>
   </div>
 
@@ -398,7 +403,7 @@
   <!-- ═══ NAVIGATION ═══ -->
   <header id="mainHeader">
     <div class="container nav-inner">
-      <a href="#accueil" class="logo">Libertà<span>Créativité</span></a>
+      <a href="#accueil" class="logo">Liberta<span>Creativite</span></a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#accueil" data-section="accueil" class="active">Accueil</a></li>
         <li><a href="#studio" data-section="studio">Le Studio</a></li>
@@ -430,10 +435,10 @@
         </div>
       </div>
       <div class="hero-features stagger-children">
-        <div class="hero-feat"><div class="hero-feat-icon">📍</div><div class="hero-feat-title">Emplacement Premium</div><div class="hero-feat-desc">Avenue Louise, Bruxelles</div></div>
-        <div class="hero-feat"><div class="hero-feat-icon">✨</div><div class="hero-feat-title">Lieu Modulable</div><div class="hero-feat-desc">Adapté à vos besoins</div></div>
-        <div class="hero-feat"><div class="hero-feat-icon">🪄</div><div class="hero-feat-title">Prestations Sur Mesure</div><div class="hero-feat-desc">Décoration, traiteur, technique...</div></div>
-        <div class="hero-feat"><div class="hero-feat-icon">🤝</div><div class="hero-feat-title">Accompagnement</div><div class="hero-feat-desc">De la planification à la réalisation</div></div>
+        <div class="hero-feat"><div class="hero-feat-icon"><i data-lucide="map-pin"></i></div><div class="hero-feat-title">Emplacement Premium</div><div class="hero-feat-desc">Avenue Louise, Bruxelles</div></div>
+        <div class="hero-feat"><div class="hero-feat-icon"><i data-lucide="sparkles"></i></div><div class="hero-feat-title">Lieu Modulable</div><div class="hero-feat-desc">Adapté à vos besoins</div></div>
+        <div class="hero-feat"><div class="hero-feat-icon"><i data-lucide="wand-2"></i></div><div class="hero-feat-title">Prestations Sur Mesure</div><div class="hero-feat-desc">Décoration, traiteur, technique...</div></div>
+        <div class="hero-feat"><div class="hero-feat-icon"><i data-lucide="handshake"></i></div><div class="hero-feat-title">Accompagnement</div><div class="hero-feat-desc">De la planification à la réalisation</div></div>
       </div>
       <div style="display:flex;gap:3rem;justify-content:center;margin-top:2rem;flex-wrap:wrap">
         <div style="text-align:center"><span class="counter-value" data-count="115">0</span> m²<br><small style="color:var(--text-muted)">modulables</small></div>
@@ -446,13 +451,13 @@
     <section id="studio" class="container">
       <div class="accent-line">Notre Histoire</div>
       <div class="histoire-grid">
-        <div class="histoire-visual reveal" style="background: url('video20260424095123/PHOTO-2026-04-24-09-51-16.jpg') center/cover no-repeat; text-indent:-9999px"><div class="histoire-badge" style="text-indent:0">13<br><small>Rue du Mail</small></div>📸</div>
+        <div class="histoire-visual reveal" style="background: url('video20260424095123/PHOTO-2026-04-24-09-51-16.jpg') center/cover no-repeat; text-indent:-9999px"><div class="histoire-badge" style="text-indent:0">13<br><small>Rue du Mail</small></div><i data-lucide="camera" style="width: 1em; height: 1em;"></i></div>
         <div class="reveal">
           <p class="histoire-quote">"La passion nourrit la créativité, et la créativité <span>apporte la liberté.</span>"</p>
           <p class="histoire-text">Libertà Créativité Studio est un espace polyvalent et inspirant niché au cœur d'Ixelles, à quelques minutes de l'Avenue Louise. Alliant modernité, élégance et modularité, ce lieu unique est conçu pour accueillir tous types de projets créatifs et professionnels.</p>
           <p class="histoire-text">Sous la direction artistique de <strong>Joely Lutonadio</strong>, le studio met à votre disposition des décors soignés et du mobilier design pour transformer vos idées en résultats concrets.</p>
           <div class="signature">Joely Lutonadio</div><div class="signature-title">Direction artistique & Fondatrice</div>
-          <div class="eco-badge">🌿 Lieu éco-responsable</div>
+          <div class="eco-badge"><i data-lucide="leaf" style="width: 1.2em; height: 1.2em;"></i> Lieu éco-responsable</div>
         </div>
       </div>
     </section>
@@ -480,24 +485,24 @@
           <div class="service-category-header"><h3>Location : <em>L'Espace Créatif</em></h3></div>
           <p class="service-category-desc">Un cadre élégant et modulable pour vos projets et événements.</p>
           <div class="cards-grid stagger-children">
-            <div class="card-3d"><div class="card-top"><h4>Studio Shooting & Vidéo</h4><div class="card-price">70€</div></div><p class="card-desc">Accès au plateau et setup mis à disposition.</p><div class="card-tag">Création</div></div>
-            <div class="card-3d"><div class="card-top"><h4>Location Podcast</h4><div class="card-price">80€ <small>et +</small></div></div><p class="card-desc">Lieu + Micros + Setup technique inclus.</p><div class="card-tag">Audio</div></div>
-            <div class="card-3d"><div class="card-top"><h4>Vestiaire</h4><div class="card-price">50€</div></div><p class="card-desc">Espace dédié pour vos tenues et préparations.</p><div class="card-tag">Option</div></div>
-            <div class="card-3d featured"><div class="card-badge">Populaire</div><div class="card-top"><h4>Événementiel Privé</h4><div class="card-price">150€ <small>/h</small></div></div><p class="card-desc">Anniversaire, baby shower, dîner privé.</p><ul class="card-features"><li>Capacité jusqu'à 50 personnes</li><li>Espace élégant & modulable</li><li>Table buffet & matériel audio/visuel</li><li>Accompagnement personnalisé</li></ul><div class="card-tag">Privé</div></div>
-            <div class="card-3d featured"><div class="card-top"><h4>Événementiel Corporate</h4><div class="card-price">150€ <small>/h</small></div></div><p class="card-desc">Conférence, séminaire, lancement de produit.</p><ul class="card-features"><li>Capacité jusqu'à 70 personnes</li><li>Prix variable selon vos demandes</li></ul><div class="card-tag">Professionnel</div></div>
+            <div class="card-3d"><div class="card-top"><h4>Studio Shooting & Vidéo</h4><div class="card-price">70€</div></div><p class="card-desc">Accès au plateau et setup mis à disposition.</p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Création</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d"><div class="card-top"><h4>Location Podcast</h4><div class="card-price">80€ <small>et +</small></div></div><p class="card-desc">Lieu + Micros + Setup technique inclus.</p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Audio</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d"><div class="card-top"><h4>Vestiaire</h4><div class="card-price">50€</div></div><p class="card-desc">Espace dédié pour vos tenues et préparations.</p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Option</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d featured"><div class="card-badge">Populaire</div><div class="card-top"><h4>Événementiel Privé</h4><div class="card-price">150€ <small>/h</small></div></div><p class="card-desc">Anniversaire, baby shower, dîner privé.</p><ul class="card-features"><li>Capacité jusqu'à 50 personnes</li><li>Espace élégant & modulable</li><li>Table buffet & matériel audio/visuel</li><li>Accompagnement personnalisé</li></ul><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Privé</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d featured"><div class="card-top"><h4>Événementiel Corporate</h4><div class="card-price">150€ <small>/h</small></div></div><p class="card-desc">Conférence, séminaire, lancement de produit.</p><ul class="card-features"><li>Capacité jusqu'à 70 personnes</li><li>Prix variable selon vos demandes</li></ul><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Professionnel</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
           </div>
         </div>
         <div class="reveal">
           <div class="service-category-header"><h3>Production : <em>L'Expertise Technique</em></h3></div>
           <p class="service-category-desc">L'expertise technique pour sublimer votre image.</p>
           <div class="cards-grid stagger-children">
-            <div class="card-3d"><div class="card-top"><h4>Photo — 30 min</h4><div class="card-price">125€</div></div><ul class="card-features"><li>2 tenues</li><li>6 photos retouchées</li><li>Galerie complète (brute)</li><li>Livraison digitale sous 5 jours</li></ul><div class="card-tag">Photographie</div></div>
-            <div class="card-3d featured"><div class="card-badge">Populaire</div><div class="card-top"><h4>Photo — 1 heure</h4><div class="card-price">185€</div></div><ul class="card-features"><li>2 tenues</li><li>15 photos retouchées</li><li>Galerie complète (brute)</li><li>Livraison digitale sous 5 jours</li></ul><p class="card-option">🚀 Option Express (24h–48h) : <strong>+30€</strong></p><div class="card-tag">Photographie</div></div>
-            <div class="card-3d"><div class="card-top"><h4>Pack 1 Caméra (Brut)</h4><div class="card-price">160€</div></div><p class="card-desc">Filmage en plan fixe, remise des fichiers bruts.</p><div class="card-tag">Podcast & Vidéo</div></div>
-            <div class="card-3d"><div class="card-top"><h4>Pack 1 Caméra + Montage</h4><div class="card-price">300€</div></div><p class="card-desc">Montage complet, nettoyage son, intro/outro. Prêt pour YouTube.</p><div class="card-tag">Podcast & Vidéo</div></div>
-            <div class="card-3d"><div class="card-top"><h4>Pack 2 Caméras (Brut)</h4><div class="card-price">250€</div></div><p class="card-desc">Filmage multi-angles, remise des fichiers bruts.</p><div class="card-tag">Podcast & Vidéo</div></div>
-            <div class="card-3d"><div class="card-top"><h4>Pack 2 Caméras + Montage</h4><div class="card-price">380€</div></div><p class="card-desc">Montage pro complet, synchronisation, transitions + 1 extrait court pour vos réseaux sociaux.</p><div class="card-tag">Podcast & Vidéo</div></div>
-            <div class="card-3d featured"><div class="card-top"><h4>Direction Artistique</h4><div class="card-price">300€ <small>et +</small></div></div><p class="card-desc">Création d'un univers visuel fort, direction de shooting, stylisme, moodboard et sélection des décors pour une expérience sur mesure.</p><div class="card-tag">Sur mesure</div></div>
+            <div class="card-3d"><div class="card-top"><h4>Photo — 30 min</h4><div class="card-price">125€</div></div><ul class="card-features"><li>2 tenues</li><li>6 photos retouchées</li><li>Galerie complète (brute)</li><li>Livraison digitale sous 5 jours</li></ul><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Photographie</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d featured"><div class="card-badge">Populaire</div><div class="card-top"><h4>Photo — 1 heure</h4><div class="card-price">185€</div></div><ul class="card-features"><li>2 tenues</li><li>15 photos retouchées</li><li>Galerie complète (brute)</li><li>Livraison digitale sous 5 jours</li></ul><p class="card-option"><i data-lucide="rocket" style="width: 1.2em; height: 1.2em; display: inline-block; vertical-align: middle; margin-right: 0.2rem;"></i> Option Express (24h–48h) : <strong>+30€</strong></p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Photographie</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d"><div class="card-top"><h4>Pack 1 Caméra (Brut)</h4><div class="card-price">160€</div></div><p class="card-desc">Filmage en plan fixe, remise des fichiers bruts.</p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Podcast & Vidéo</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d"><div class="card-top"><h4>Pack 1 Caméra + Montage</h4><div class="card-price">300€</div></div><p class="card-desc">Montage complet, nettoyage son, intro/outro. Prêt pour YouTube.</p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Podcast & Vidéo</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d"><div class="card-top"><h4>Pack 2 Caméras (Brut)</h4><div class="card-price">250€</div></div><p class="card-desc">Filmage multi-angles, remise des fichiers bruts.</p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Podcast & Vidéo</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d"><div class="card-top"><h4>Pack 2 Caméras + Montage</h4><div class="card-price">380€</div></div><p class="card-desc">Montage pro complet, synchronisation, transitions + 1 extrait court pour vos réseaux sociaux.</p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Podcast & Vidéo</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
+            <div class="card-3d featured"><div class="card-top"><h4>Direction Artistique</h4><div class="card-price">300€ <small>et +</small></div></div><p class="card-desc">Création d'un univers visuel fort, direction de shooting, stylisme, moodboard et sélection des décors pour une expérience sur mesure.</p><div class="card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:1.5rem; gap:1rem;"><div class="card-tag" style="margin-top:0; padding-top:0;">Sur mesure</div><a href="#reservation" class="btn btn-outline" style="padding: 0.4rem 1.2rem; min-height: 32px; font-size: 0.65rem; border-radius: 50px;">Réserver</a></div></div>
           </div>
         </div>
       </div>
@@ -512,10 +517,9 @@
         <div class="reservation-info">
           <h3>Votre studio.<br>Votre moment.</h3>
           <p style="color:var(--text-secondary);margin:1rem 0 2rem">Réservez en quelques étapes. Confirmation sous 24h.</p>
-          <div class="info-item"><div class="info-icon">🕐</div><div><div class="info-label">Horaires</div><div class="info-value">Mar.–Dim. : 10h–20h · Lundi fermé</div></div></div>
-          <div class="info-item"><div class="info-icon">📍</div><div><div class="info-label">Adresse</div><div class="info-value">Rue du Mail 13/15, 1050 Ixelles</div></div></div>
-          <div class="info-item"><div class="info-icon">✉️</div><div><div class="info-label">Email</div><div class="info-value">libertacreativite@gmail.com</div></div></div>
-          <div class="info-item"><div class="info-icon">📱</div><div><div class="info-label">Réservation</div><div class="info-value">Via DM Instagram ou Calendly</div></div></div>
+          <div class="info-item"><div class="info-icon"><i data-lucide="clock" style="width: 1.2em; height: 1.2em;"></i></div><div><div class="info-label">Horaires</div><div class="info-value">Mar.–Dim. : 10h–20h · Lundi fermé</div></div></div>
+          <div class="info-item"><div class="info-icon"><i data-lucide="map-pin" style="width: 1.2em; height: 1.2em;"></i></div><div><div class="info-label">Adresse</div><div class="info-value">Rue du Mail 13/15, 1050 Ixelles</div></div></div>
+          <div class="info-item"><div class="info-icon"><i data-lucide="mail" style="width: 1.2em; height: 1.2em;"></i></div><div><div class="info-label">Email</div><div class="info-value">libertacreativite@gmail.com</div></div></div>
         </div>
         <form class="reservation-form" onsubmit="handleBooking(event)">
           <div class="form-row"><input type="text" class="form-input" placeholder="Prénom" required><input type="text" class="form-input" placeholder="Nom" required></div>
@@ -548,13 +552,13 @@
       <div class="reveal"><div class="accent-line">Nous contacter</div><h2>Parlons de votre projet.</h2><p style="color:var(--text-secondary);max-width:500px;margin:1.5rem 0 2rem">Prêt à collaborer ? Contactez-nous pour un devis personnalisé sous 24h.</p></div>
       <div class="contact-grid">
         <div class="reveal"><div class="contact-list">
-          <div class="info-item"><div class="info-icon">📧</div><div><div class="info-label">Email</div><div class="info-value">libertacreativite@gmail.com</div></div></div>
-          <div class="info-item"><div class="info-icon">📍</div><div><div class="info-label">Adresse</div><div class="info-value">Rue du Mail 13/15, 1050 Ixelles</div></div></div>
-          <div class="info-item"><div class="info-icon">🕐</div><div><div class="info-label">Horaires</div><div class="info-value">Mar.–Dim. : 10h–20h · Lundi fermé</div></div></div>
-          <div class="info-item"><div class="info-icon">📱</div><div><div class="info-label">Réseaux</div><div class="info-value">Instagram · Calendly</div></div></div>
+          <div class="info-item"><div class="info-icon"><i data-lucide="mail" style="width: 1.2em; height: 1.2em;"></i></div><div><div class="info-label">Email</div><div class="info-value">libertacreativite@gmail.com</div></div></div>
+          <div class="info-item"><div class="info-icon"><i data-lucide="map-pin" style="width: 1.2em; height: 1.2em;"></i></div><div><div class="info-label">Adresse</div><div class="info-value">Rue du Mail 13/15, 1050 Ixelles</div></div></div>
+          <div class="info-item"><div class="info-icon"><i data-lucide="clock" style="width: 1.2em; height: 1.2em;"></i></div><div><div class="info-label">Horaires</div><div class="info-value">Mar.–Dim. : 10h–20h · Lundi fermé</div></div></div>
+          <div class="info-item"><div class="info-icon"><i data-lucide="smartphone" style="width: 1.2em; height: 1.2em;"></i></div><div><div class="info-label">Réseaux</div><div class="info-value">Instagram · Calendly</div></div></div>
         </div></div>
         <div class="reveal">
-          <div class="contact-map"><div style="font-size:3rem;color:var(--accent)">📍</div><p style="margin-top:1rem;color:var(--text)">Ixelles, Bruxelles</p><p style="color:var(--text-secondary)">Rue du Mail 13/15<br>1050 Ixelles</p></div>
+          <div class="contact-map"><div style="font-size:3rem;color:var(--accent)"><i data-lucide="map-pin" style="width: 1em; height: 1em;"></i></div><p style="margin-top:1rem;color:var(--text)">Ixelles, Bruxelles</p><p style="color:var(--text-secondary)">Rue du Mail 13/15<br>1050 Ixelles</p></div>
           <div class="access-grid">
             <div class="access-card"><div class="info-label">Métro</div><div class="info-value"><strong>Porte de Namur</strong><br>Lignes 2 & 6 · 10 min</div></div>
             <div class="access-card"><div class="info-label">Parking</div><div class="info-value"><strong>À 1 min à pied</strong><br>Parkings publics proches</div></div>
@@ -566,12 +570,12 @@
 
   <footer>
     <div class="container footer-grid">
-      <div><div class="footer-logo">Libertà <span>Créativité</span></div><p class="footer-desc">Studio créatif polyvalent au cœur d'Ixelles.</p><div class="footer-socials"><div class="social-dot">ig</div><div class="social-dot">fb</div><div class="social-dot">yt</div></div></div>
+      <div><div class="footer-logo">Liberta <span>Creativite</span></div><p class="footer-desc">Studio créatif polyvalent au cœur d'Ixelles.</p><div class="footer-socials"><div class="social-dot">ig</div><div class="social-dot">fb</div><div class="social-dot">yt</div></div></div>
       <div class="footer-col"><h4>Services</h4><ul class="footer-links"><li><a href="#services">Location Studio</a></li><li><a href="#services">Podcast</a></li><li><a href="#services">Photographie</a></li><li><a href="#services">Vidéo & Montage</a></li><li><a href="#services">Direction Artistique</a></li><li><a href="#services">Événementiel</a></li></ul></div>
       <div class="footer-col"><h4>Infos</h4><ul class="footer-links"><li><a href="#services">Tarifs</a></li><li><a href="#reservation">Réservation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Accès</a></li></ul></div>
       <div class="footer-col"><h4>Contact</h4><ul class="footer-links"><li><a href="mailto:libertacreativite@gmail.com">Email</a></li><li><a href="#">Instagram</a></li><li><a href="#">Calendly</a></li></ul></div>
     </div>
-    <div class="container footer-bottom"><div>© 2026 Libertà Créativité Studio · 13 rue du Mail, 1050 Ixelles</div><div style="display:flex;gap:1.5rem;align-items:center"><span>🌿 Éco-responsable</span><span>Accessible PMR</span><a href="admin.html" style="color:#8A7D72;text-decoration:none;font-size:.65rem;opacity:.5;transition:opacity .3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5">⚙ Admin</a></div></div>
+    <div class="container footer-bottom"><div>© 2026 Liberta Creativite Studio · 13 rue du Mail, 1050 Ixelles</div><div style="display:flex;gap:1.5rem;align-items:center"><span><i data-lucide="leaf" style="width: 1em; height: 1em; vertical-align: middle; margin-right: 0.2rem;"></i> Éco-responsable</span><span>Accessible PMR</span><a href="admin.html" style="color:#8A7D72;text-decoration:none;font-size:.65rem;opacity:.5;transition:opacity .3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5"><i data-lucide="settings" style="width: 1em; height: 1em; vertical-align: middle; margin-right: 0.2rem;"></i> Admin</a></div></div>
   </footer>
 
   </div><!-- .site-content -->
@@ -932,5 +936,6 @@
       },1200);
     }
   </script>
+  <script>lucide.createIcons();</script>
 </body>
 </html>
